@@ -3,6 +3,9 @@
   */
 class Recursion {
 
-//fibonacci sequence
-  def fi
+  //fibonacci sequence
+  override def finalize(): Unit =
+    var inpt = "hello"
+
+  inpt.take
 }

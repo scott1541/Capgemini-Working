@@ -8,7 +8,7 @@ x match {
 //Check if input is 0 or 1, and output 0 or 1 respectively
 //if not then output the sum of the previous two numbers
 
-//fib(16)
+fib(16) // -> res0: Int = 987
 
 //Maximum
 val nums: Seq[Int] = List(2,1,3,19,7,5,10,15,11)
@@ -19,13 +19,13 @@ def max(nums: Seq[Int]): Int = {
     case head :: Nil => head
     case head :: tail if head >= tail.max => head
     case head :: tail if head < tail.max => max(tail)
-      // check if the list is empty and if so return 0
-      // check if tail is empty and if so return head
-      // check if the head is more or equal to the maximum number left in the tail and if so head is the max
-      // check if the head is less than the maximum number left in the tail call the function again with the tail
+      // check if the list is empty -> return 0
+      // check if tail is empty -> return head
+      // check if the head >= maximum number -> return 0
+      // check if the head < maximum number -> call again with tail
   }
 }
-//max(nums)
+max(nums) // -> res1: Int = 19
 
 //Replicate
 var repeat: Seq[Int] = List()
@@ -36,7 +36,7 @@ def replicate(a: Int, b:Int): Seq[Int] = {
   }
 }
 //Replicate the first value(a),  b times
-//replicate(54,5)
+replicate(54,5) // -> res2: Seq[Int] = List(54, 54, 54, 54, 54)
 
 //Take
 val nums2: Seq[Int] = List(1,2,3,19,7,8,10,15,11)
@@ -49,28 +49,42 @@ def take(tk: Int, nums2: Seq[Int]): Seq[Int] = {
   }
 }
 //Takes first 3 elements from the sequence
-//take(3, nums2)
+take(3, nums2) // -> res3: Seq[Int] = List(1, 2, 3)
 
 
 //Reverse
-var list1: Seq[Int] = List(1,2,3,4,5)
-var list2: Seq[Int] = List()
+//Reverses order of a list, makes use of currying
+//Using type List[] for this as (output.::(head)) gives error as it needs list
+val list1: List[Int] = List(1,2,3,4,5,6,7,8,9)
+val list2: List[Int] = List()
 
-def reverse(la: Seq[Int], lb: Seq[Int]): Seq[Int] = {
-  la match {
-    case Nil => lb
-    case _ => list2 = list2:+ la.head; reverse(la.tail, lb);
+def reverse(input: List[Int])(output: List[Int]): List[Int] = {
+  input match {
+    case Nil => output
+    case head :: tail => reverse(tail)(output.::(head))
+    case _ => output
   }
 }
+reverse(list1)(list2)  // => res4: List[Int] = List(9, 8, 7, 6, 5, 4, 3, 2, 1)
 
-reverse(list1,list2)
 
-
-//Repeat
 //Zip
+//Join two lists recursively, makes use of currying
+//Using type List[] for this as (output.::(head)) gives error as it needs list
+val zList1 = List(1,2,3,4,5)
+val zList2 = List(6,7,8,9,10,11,12)
+
+def zip(input: List[Int]) (output: List[Int]): List[Int] =
+input match {
+  case Nil => output
+  case head :: tail => zip(tail)(output.::(head))
+  case _ => output
+}
+
+zip(zList1)(zList2) // ->res5:  List[Int] = List(5, 4, 3, 2, 1, 6, 7, 8, 9, 10, 11, 12)
 
 //Element exists
-
+//Finds if an element (char) exists within a sequence
 var lst: Seq[Char] = List('a','b', 'c', 'd', 'e', 'f', 'x', 'y', 'z')
 
 def exists(elem: Char, lst: Seq[Char]): Any = {
@@ -82,11 +96,14 @@ def exists(elem: Char, lst: Seq[Char]): Any = {
 	}
 }
 
-exists('x', lst)
+exists('x', lst) // -> res6: Any = 1
 //Output 1 = True, 0 = False, bool not working properly on this machine
 
 
 //Quicksort
+//Sort list into ascending order
+//Pivot is middle point in sequence, searches either side of pivot
+
 def quickSort(nums: Seq[Int]): Seq[Int] = {
   if (nums.length <= 1) nums
   else {
@@ -95,5 +112,6 @@ def quickSort(nums: Seq[Int]): Seq[Int] = {
       nums filter (pivot ==),
       quickSort(nums filter (pivot <)))
   }}
-//Pivot is middle point in sequence, searches either side of pivot
-//quickSort(nums)
+
+quickSort(nums) // -> res7: Seq[Int] = List(1, 2, 3, 5, 7, 10, 11, 15, 19)
+

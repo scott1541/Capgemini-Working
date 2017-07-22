@@ -22,4 +22,6 @@ val numbers = "73167176531330624919225119674426574742355349194934" +
     val num2 = numbers.toCharArray.toList
 var maxnum
 var curnum
-num2.sliding(13,1).foreach(item => item )
+val maxi = num2.sliding(13,1).max
+  println(maxi)
+    //foreach(item => println(item) )
