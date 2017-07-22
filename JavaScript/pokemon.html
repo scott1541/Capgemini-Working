@@ -1,0 +1,70 @@
+<html>
+<head>
+<h1>QA Pokemon Fight Club</h1>
+</head>
+<body>
+<br><br><br>
+<input type="text" id="poke1">
+<label for="poke2"> FIGHT! </label>
+<input type="text" id="poke2">
+<button onclick="fight(document.getElementById('poke1').value, document.getElementById('poke2').value)"> Go! </button>
+<br><br>
+<h2 id="output"> </h2>
+
+<script = "javascript">
+
+function fight(type1, type2)
+{
+	var types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
+		
+	var damage = 0;
+	var decomp1 = type1.split(" ");
+	var decomp2 = type2.split(" ");
+
+	for(var x = 0; x <= decomp1.length-1; x++)
+	{
+		for(var y = 0; y <= decomp2.length-1; y++)
+		{
+			damage += getDamage(types.findIndex(i => i === decomp1[x]), types.findIndex(i => i === decomp2[y]));
+		}
+	}
+
+	document.getElementById("output").innerHTML = `KAPOW!...  ${type1} does ${damage} damage to ${type2}`;
+
+clearText();
+}
+
+function getDamage(i, j)   //Big dirty pseudo-matrix
+{
+	var damages = [
+					[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5, 1],
+					[1, 0.5, 0.5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 0.5, 1, 0.5, 1, 2, 1],
+					[1, 2, 0.5, 1, 0.5, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1],
+					[1, 1, 2, 0.5, 0.5, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0.5, 1, 1, 1],
+					[1, 0.5, 2, 1, 0.5, 1, 1, 0.5, 2, 0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5, 1],
+					[1, 0.5, 0.5, 1, 2, 0.5, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 0.5, 1],
+					[2, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 0.5, 2, 0, 1, 2, 2, 0.5],
+					[1, 1, 1, 1, 2, 1, 1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 1, 1, 0, 2],
+					[1, 2, 1, 2, 0.5, 1, 1, 2, 1, 0, 1, 0.5, 2, 1, 1, 1, 2, 1],
+					[1, 1, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 0.5, 1],
+					[1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0.5, 1, 1, 1, 1, 0, 0.5, 1],
+					[1, 0.5, 1, 1, 2, 1, 0.5, 0.5, 1, 0.5, 2, 1, 1, 0.5, 1, 2, 0.5, 0.5],
+					[1, 2, 1, 1, 1, 2, 0.5, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 0.5, 1],
+					[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 1],
+					[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0.5, 0],
+					[1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 0.5],
+					[1, 0.5, 0.5, 0.5, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0.5, 2],
+					[1, 0.5, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 1, 1, 1, 2, 2, 0.5, 1]
+				  ];
+			return damages[i][j];
+}
+
+function clearText()
+{
+   document.getElementById("poke1").value= "";
+   document.getElementById("poke2").value= "";
+}
+
+</script>
+</body>
+</html>

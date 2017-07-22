@@ -1,0 +1,160 @@
+<html>
+<head>
+<h1>QA Garage 2: Electric Boogaloo</h1>
+</head>
+<body>
+<script = "javascript">
+//"use strict";
+
+var garage = new Array();
+
+function checkIn(reg, make, flts)
+{
+
+	if(reg && make)
+	{
+		var car = new Object();
+		car.carReg = reg; 
+		car.carMake = make; 
+		
+		if(flts)
+		{
+			car.fault = flts;
+		}
+		else 
+		{
+			car.fault = 0;
+		}
+
+		garage.push(car);
+	}
+	clearText()
+}
+
+function checkOut(regnum)
+{
+	calcBill(regnum);
+
+	var index = garage.findIndex(i => i.carReg === regnum);
+		console.log(index);
+	if (index >= 0)
+	{
+		garage.splice(index,1);
+	}
+
+	clearText()
+}
+
+function garageContents() 
+{
+	if(garage.length > 0)
+	{
+	garage.forEach(function(item){console.log(`Vehicle: ${item.carReg} ${item.carMake} ${item.fault}`)});
+	}
+	else
+	{
+		console.log("Garage is Empty.");
+	}
+}
+
+function calcBill(reg)
+{
+
+	var index = garage.findIndex(i => i.carReg === reg);
+	var pay = garage[index].fault * 45.00
+	console.log(`Total cost for ${garage[index].carReg} is £ ${pay}`);
+	clearText()
+}
+
+function clearGarage()
+{
+	garage = [];
+}
+
+function clearText()
+{
+   document.getElementById("carReg").value= "";
+   document.getElementById("carMaM").value= "";
+   document.getElementById("faults").value= "";
+   document.getElementById("command").value= "";
+}
+
+function exec(input)
+{
+	var decomp = input.split(" ");
+	console.log(decomp[0]);
+	switch(decomp[0])
+	{
+		case "ADD":
+			checkIn(decomp[1], decomp[2] + " " + decomp[3], decomp[4]);
+			break;
+		case "OUT":
+			checkOut(decomp[1]);
+			break;
+		case "BILL":
+			calcBill(decomp[1]);
+			break;
+		case "CONTENTS":
+			garageContents();
+			break;
+		case "CLEAR":
+			clearGarage();
+			break;
+		default:
+			break;
+	}
+	clearText()
+}
+
+</script>
+
+<br>
+<label for="carReg">Car Reg No.</label>
+<input type="text" id="carReg">
+<br>
+<label for="carMaM">Car Make and Model</label>
+<input type="text" id="carMaM">
+<br>
+<label for="faults">No. of Faults</label>
+<input type="number" id="faults">
+<br><br>
+
+<button onclick="checkIn(document.getElementById('carReg').value, 
+						document.getElementById('carMaM').value, 
+						document.getElementById('faults').value)">Check In Car</button>
+
+<button onclick="checkOut(document.getElementById('carReg').value)">Check Out Car</button>
+<br>
+<button onclick="calcBill(document.getElementById('carReg').value)">Calculate Bill</button>
+<button onclick="garageContents()">Garage Contents</button>
+<br><br>
+<button onclick="clearGarage()">Clear Out Garage</button>
+<br><br><br><br><br><br>
+
+<label for="command">Admin CLI: </label>
+<input type="text" id="command">
+<button onclick="exec(document.getElementById('command').value)">Execute</button>
+
+<br><br><h>CLI Usage:</h4><br>
+<h>Add:   ADD REGNUM MAKE MODEL FAULTS</h4><br>
+<h>Checkout:   OUT REGNUM </h4><br>
+<h>Bill:   BILL REGNUM</h4><br>
+<h>Output Cont:   CONTENTS</h4><br>
+<h>Empty Garage:    CLEAR</h4>
+</body>
+
+</html>
+
+<!--
+Once the initial garage application is done, create a console interface that accepts commands to perform the previous commands via the console, instead of the interface e.g.
+
+add car Peugeot yk10ykm 4 
+output Garage
+check in yk10ykm
+bill yk10ykm
+garage changeLimit 10
+garage empty
+Which will output the changes in the console after being ran.
+The commands must be oneliners.
+
+-->

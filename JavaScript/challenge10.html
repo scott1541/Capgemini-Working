@@ -1,0 +1,122 @@
+<html>
+<head>
+<h1>QA Garage</h1>
+</head>
+<body>
+<script = "javascript">
+
+var garage = new Array();
+
+
+function checkIn()
+{
+
+	if(document.getElementById('carReg').value && document.getElementById('carMaM').value)
+	{
+		car = new Object();
+		car.carReg = document.getElementById('carReg').value;
+		car.carMake = document.getElementById('carMaM').value;
+		
+		if(document.getElementById('faults').value)
+		{
+			car.fault = document.getElementById('faults').value;
+		}
+		else 
+		{
+			car.fault = 0;
+		}
+
+		garage.push(car);
+	}
+	clearText()
+}
+
+function checkOut()
+{
+	var regnum =  document.getElementById('carReg').value;
+
+	calcBill(regnum);
+
+	var index = garage.findIndex(i => i.carReg === regnum);
+		console.log(index);
+	if (index >= 0)
+	{
+		garage.splice(index,1);
+	}
+
+	clearText()
+}
+
+
+
+function garageContents() 
+{
+	if(garage.length > 0)
+	{
+	for(var i = 0; i < garage.length; i++)
+		{
+			console.log("Vehicle: " + garage[i].carReg + ", " + garage[i].carMake + ", " + garage[i].fault);
+		}
+	}
+	else
+	{
+		console.log("Garage is Empty.");
+	}
+}
+
+function calcBill(reg)
+{
+
+	var index = garage.findIndex(i => i.carReg === reg);
+	var pay = garage[index].fault * 45.00
+	console.log("Total cost for " + garage[index].carReg + " is £" + pay);
+	clearText()
+}
+
+function clearGarage()
+{
+	garage = [];
+}
+
+function clearText()
+{
+   document.getElementById("carReg").value= "";
+   document.getElementById("carMaM").value= "";
+   document.getElementById("faults").value= "";
+}
+
+</script>
+
+<br>
+<label for="carReg">Car Reg No.</label>
+<input type="text" id="carReg">
+<br>
+<label for="carMaM">Car Make and Model</label>
+<input type="text" id="carMaM">
+<br>
+<label for="faults">No. of Faults</label>
+<input type="number" id="faults">
+<br><br>
+
+<button onclick="checkIn()">Check In Car</button>
+<button onclick="checkOut()">Check Out Car</button>
+<br>
+<button onclick="calcBill(document.getElementById('carReg').value)">Calculate Bill</button>
+<button onclick="garageContents()">Garage Contents</button>
+<br><br>
+<button onclick="clearGarage()">Clear Out Garage</button>
+
+</body>
+</html>
+
+<!--
+Create a virtual garage with the following functionality;
+Check in cars to the garage
+Check out cars
+Output the contents of the garage
+Calculate the bill for a car, dependant on its attributes
+All of these should be able to be done via a user interface, as well as the following non-garage related features;
+Creating cars
+Creating cars with no faults
+Creating cars with numerous faults
+-->

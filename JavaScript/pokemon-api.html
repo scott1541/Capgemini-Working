@@ -1,0 +1,62 @@
+<html>
+<head>
+<h1>QA Pokemon Fight Club II</h1>
+</head>
+<body>
+<br><br><br>
+<input type="text" id="poke1">
+<label for="poke2"> FIGHT! </label>
+<input type="text" id="poke2">
+<button onclick="fight(document.getElementById('poke1').value, document.getElementById('poke2').value)"> Go! </button>
+<br><br>
+<h2 id="output"> </h2>
+
+<script = "javascript">
+
+function fight(type1, type2)
+{		
+	var decomp1 = type1.split(" ");
+	var decomp2 = type2.split(" ");
+  var damage = 0;
+
+	decomp1.forEach(function(item){
+		var json_obj = JSON.parse(getJSON("http://pokeapi.co/api/v2/type/" + item + "/"));
+		 damage += getDamage(item, decomp2, json_obj); 
+  });
+
+	document.getElementById("output").innerHTML = `KAPOW!...  ${type1} does ${damage} damage to ${type2}`;
+
+clearText();
+}
+
+
+function getDamage(type1, type2A, json_)   
+{
+  var damage2 = 0;
+
+   type2A.forEach(function(Ditem){
+    json_.damage_relations.double_damage_to.forEach((Aitem) => { if(Aitem.name === Ditem) {damage2 += 2}})
+    json_.damage_relations.half_damage_to.forEach((Aitem) => { if(Aitem.name === Ditem) {damage2 += 0.5}})
+    //No need for no_damage_to.....  because no damage
+    });
+    return damage2;
+}
+
+
+function getJSON(Url)
+{
+    var Httpreq = new XMLHttpRequest();
+    Httpreq.open("GET", Url, false); //False = synchronous
+    Httpreq.send();
+    return Httpreq.responseText; 
+}
+
+function clearText()
+{
+   document.getElementById("poke1").value= "";
+   document.getElementById("poke2").value= "";
+}
+
+</script>
+</body>
+</html>

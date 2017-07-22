@@ -1,0 +1,70 @@
+<html>
+<head>
+</head>
+<body>
+<script>
+
+function getJSON(Url)
+{
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET", Url, false);
+    //Httpreq.responseType = 'json' 
+    Httpreq.send(null);
+    return Httpreq.responseText; 
+}
+
+function getJson() 
+{
+	//var superHeroes = getJSON("https://raw.githubusercontent.com/ewomackQA/JSONDataRepo/master/example.json");
+
+	//var myH1 = document.createElement('h1');
+    //console.log(superHeroes['squadName']);
+    //myH1.textContent = superHeroes['squadName'];
+    //document.getElementsByTagName('head')[0].appendChild(myH1); 
+
+    var json_obj = JSON.parse(getJSON("https://raw.githubusercontent.com/ewomackQA/JSONDataRepo/master/example.json"));
+    console.log("Squad: "+ json_obj.squadName);
+    console.log("Town: "+ json_obj.homeTown);
+    console.log("Formed: "+ json_obj.formed);
+    console.log("Base: "+ json_obj.secretBase);
+    console.log("Active?: "+ json_obj.active);
+    console.log("Members: "+ json_obj.members);           
+}
+
+function getMoreJson() 
+{
+	var input = document.getElementById('input1').value;
+
+    var json_obj = JSON.parse(getJSON("https://raw.githubusercontent.com/ewomackQA/JSONDataRepo/master/kings.json"));
+
+    	for(var i = 0; i < 56; i++)
+    	{
+    		if(json_obj[i].nm == input)
+    		{
+				console.log(json_obj[i].nm);
+    			console.log(json_obj[i].cty);
+    			console.log(json_obj[i].hse);
+    			console.log(json_obj[i].yrs);
+    			break;
+    		}
+    	}
+}
+</script>
+
+<button onclick="getJson()">Get JSON Example</button>
+<input type="text" id="input1">
+<button onclick="getMoreJson()">Search Kings</button>
+
+</body>
+</html>
+
+<!--
+Using VanillaJS, access the JSON file at this address
+https://github.com/womackx/JSONDataRepo/blob/master/example.json
+Once loaded, display those objects on your page.
+
+Similarly, load this JSON file at this address
+https://github.com/womackx/JSONDataRepo/blob/master/kings.json
+Instead of loading all the object on the page, have a text box that will take an attribute that belongs to these objects, and output the contents of the specific object it’s associated with.
+
+-->
