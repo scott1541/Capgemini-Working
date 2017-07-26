@@ -1,5 +1,3 @@
-package hello
-
 import Insert._
 import scalafx.application.JFXApp
 import scalafx.Includes._
@@ -58,12 +56,26 @@ object MpgTool extends JFXApp {
         button.layoutX = 150
         button.layoutY = 250
 
-        content = List(label, label2, label3, label4, label5, label6, label7, button, text1, text2)
+        val button2 = new Button("Update")
+        button2.layoutX = 150
+        button2.layoutY = 320
+
+        content = List(label, label2, label3, label4, label5, label6, label7, button, button2, text1, text2)
 
         button.onAction = (e: ActionEvent) => {
-              val apple = MilesPG(234, 29.54)
-              Insert.saveMP
+              val record = MilesPG(getMiles(), getFuel())
+              Insert.saveMPG(record)
 
+        }
+        button2.onAction = (e: ActionEvent) => {
+          Insert.getMPG
+        }
+
+        def getMiles(): Double = {
+          return text1.getText.toDouble
+        }
+        def getFuel(): Double = {
+          return text2.getText.toDouble
         }
      // }
     }

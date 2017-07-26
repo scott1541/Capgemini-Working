@@ -29,11 +29,15 @@ def ProcessText(input: String, function: String => String): Unit = {
 ProcessText("Hello World", ApplyThrice)
 
 ProcessText("Test", ApplyTwice)
-var list1 List[Int] = List(1,4,7,9,11,13,15)
-var list2 List[Int] = List(2,3,6,8,12,10,17)
+
+
+var list1: List[Int] = List(1,4,7,9,11,13,15)
+var list2: List[Int] = List(2,3,6,8,12,10,17)
 //Zip with
 //Takes two lists and applies function, in this case add or maximum
-def Add(list1: List[Int], list2: List[Int]): List[Int] = list1.foreach(item => item + list2.item)
+def Add(list1: List[Int], list2: List[Int]): List[Int] = {list1.zipAll(list2,0,0).foreach(
+  case(a,b) => )
+  case _ => }
 def Max()
 
 def ZipWith(list1: List[Int], list2: List[Int], function: List[Int] => List[Int]): Unit = {
