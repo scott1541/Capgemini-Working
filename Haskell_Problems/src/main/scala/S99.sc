@@ -1,52 +1,60 @@
-//Last element of a list
+//1 Last element of a list
 def last(lst: List[Int]): Int = {
   lst.reverse.head
 }
 last(List(1, 1, 2, 3, 5, 8))
 
 
-//Last but one
+//2 Last but one element
+//If tail length is 1, so 2 items in list..
+//Return head of those items
 def penultimate(lst: List[Int]): Int = {
   lst match {
     case head::tail if(tail.length == 1) => head
     case head::tail => penultimate(tail)
   }
 }
+
 penultimate(List(1, 1, 2, 3, 5, 8))
 
 
-//find nth element
+//3 find nth element
+//Loop through recursively n times
+//Return head at that index
 def nth(n: Int, lst: List[Int]): Int = {
   n match {
     case 0 => lst.head
     case _ => nth(n-1, lst.tail)
   }
 }
+
 nth(2, List(1, 1, 2, 3, 5, 8))
 
 
-//Find number of elements in list
+//4 Find number of elements in list
 def length(lst: List[Int]): Int = {
   lst.length
 }
 length(List(1, 1, 2, 3, 5, 8))
 
 
-//Reverse a list
+//5 Reverse a list
 def reverse(lst: List[Int]): List[Int] = {
   lst.reverse
 }
 reverse(List(1, 1, 2, 3, 5, 8))
 
 
-//Is list palindrome
+//6 Is list palindrome
+//Check if list is equal to reversed list
+//If it is, list is a palindrome
 def isPalindrome(lst: List[Int]): Boolean = {
   lst == lst.reverse
 }
 isPalindrome(List(1, 2, 3, 3, 2, 1))
 
 
-//Flatted nested list
+//7 Flatted nested list
 /*
 def flatten(lst: List[Any]): List[Any] = {
  lst.flatten
@@ -54,21 +62,25 @@ def flatten(lst: List[Any]): List[Any] = {
 flatten(List(List(1, 1), 2, List(3, List(5, 8)))) */
 
 
-//Eliminate conseq duplicates
-def compress(lst: List[Any]): List[Any] = {
+//8 Eliminate conseq duplicates
+//If head is equal to head of tail, call again with tail
+//Else prepend head with result of calling again
+def compress[T](lst: List[T]): List[T] = {
   lst match {
     case Nil => Nil
     case head :: Nil => List(head)
     case head :: tail if(head == tail.head) => compress(tail)
     case head :: tail => head :: compress(tail)
   }
-
 }
 
 compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
 
 
-//Pack conseq duplicates into sub-sequences
+//9 Pack conseq duplicates into sub-sequences
+//If output seq is empty or head of last elem isn't equal to remaining head ->
+//call again with prepended output seq and head of sub-seq
+//Else call again with out - last element, prepended to seq containing last element prepended to remaining head
 def pack(lst: List[Any]): List[List[Any]] = {
 
   def _pack(out: List[List[Any]], rem: List[Any]): List[List[Any]] = {
