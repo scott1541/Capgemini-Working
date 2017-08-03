@@ -1,4 +1,3 @@
-import Insert._
 import scalafx.application.JFXApp
 import scalafx.Includes._
 import scalafx.event.ActionEvent

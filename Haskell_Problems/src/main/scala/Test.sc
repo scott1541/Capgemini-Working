@@ -25,3 +25,4 @@ in.foreach(item => println(item))
 val lista: List[Char] = List('a','a','a','b','b','c')
 println(lista.distinct)
 
+//al baz = (foo, bar).zipped map (_ + _)
